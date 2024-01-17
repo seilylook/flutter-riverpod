@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_state_management/home_screen.dart';
 
+final nameProvider = Provider<String>((ref) {
+  return 'seilyook';
+});
+
 void main() {
   runApp(
     const ProviderScope(

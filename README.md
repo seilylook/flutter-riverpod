@@ -1,8 +1,8 @@
 # Flutter Riverpod
 
-This repository aims to provide a comprehensive understanding of Flutter's state management using Riverpod.
+This repository aims to provide a comprehensive understanding of Flutter's state management using `Riverpod`.
 
-## Dependenct
+## Dependency
 
 ```
 dependencies:
