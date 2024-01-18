@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_state_management/home_screen.dart';
+import 'package:flutter_state_management/user.dart';
 
-final nameProvider = Provider<String>((ref) {
-  return 'seilyook';
-});
+final userProvider = StateNotifierProvider<UserNotifier, User>(
+  (ref) => UserNotifier(),
+);
 
 void main() {
   runApp(
@@ -21,6 +22,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Riverpod',
       home: HomeScreen(),
     );
