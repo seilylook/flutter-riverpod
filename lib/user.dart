@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -6,35 +7,33 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 @immutable
 class User {
-  final String name;
-  final int age;
+  final int userId;
+  final int id;
+  final String title;
+  final bool completed;
 
   const User({
-    required this.name,
-    required this.age,
+    required this.userId,
+    required this.id,
+    required this.title,
+    required this.completed,
   });
-
-  User copyWith({
-    String? name,
-    int? age,
-  }) {
-    return User(
-      name: name ?? this.name,
-      age: age ?? this.age,
-    );
-  }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'name': name,
-      'age': age,
+      'userId': userId,
+      'id': id,
+      'title': title,
+      'completed': completed,
     };
   }
 
   factory User.fromMap(Map<String, dynamic> map) {
     return User(
-      name: map['name'] as String,
-      age: map['age'] as int,
+      userId: map['userId'] as int,
+      id: map['id'] as int,
+      title: map['title'] as String,
+      completed: map['completed'] as bool,
     );
   }
 
@@ -43,33 +42,37 @@ class User {
   factory User.fromJson(String source) =>
       User.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  User copyWith({
+    int? userId,
+    int? id,
+    String? title,
+    bool? completed,
+  }) {
+    return User(
+      userId: userId ?? this.userId,
+      id: id ?? this.id,
+      title: title ?? this.title,
+      completed: completed ?? this.completed,
+    );
+  }
+
   @override
-  String toString() => 'User(name: $name, age: $age)';
+  String toString() {
+    return 'User(userId: $userId, id: $id, title: $title, completed: $completed)';
+  }
 
   @override
   bool operator ==(covariant User other) {
     if (identical(this, other)) return true;
 
-    return other.name == name && other.age == age;
+    return other.userId == userId &&
+        other.id == id &&
+        other.title == title &&
+        other.completed == completed;
   }
 
   @override
-  int get hashCode => name.hashCode ^ age.hashCode;
-}
-
-class UserNotifier extends StateNotifier<User> {
-  UserNotifier()
-      : super(
-          const User(name: '', age: 0),
-        );
-
-  void updateName(String newName) {
-    // state의 모든 값 name, age를 복사하고
-    // 그 중에서 name 값만을 번경해준다는 뜻이다.
-    state = state.copyWith(name: newName);
-  }
-
-  void updateAge(int newAge) {
-    state = state.copyWith(age: newAge);
+  int get hashCode {
+    return userId.hashCode ^ id.hashCode ^ title.hashCode ^ completed.hashCode;
   }
 }
