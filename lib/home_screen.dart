@@ -5,18 +5,28 @@ import 'package:logger/logger.dart';
 
 var logger = Logger();
 
-class HomeScreen extends ConsumerWidget {
-  const HomeScreen({super.key});
-
-  // notifier가 상태 값을 변경하도록 도와준다.
+class MyHomePage extends ConsumerStatefulWidget {
+  const MyHomePage({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ref.watch(fetchUserProvider).when(data: (data) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends ConsumerState<MyHomePage> {
+  String userNo = '1';
+
+  @override
+  Widget build(BuildContext context) {
+    return ref.watch(fetchUserProvider(userNo)).when(data: (data) {
       return Scaffold(
         appBar: AppBar(),
         body: Column(
           children: [
+            TextField(
+              onSubmitted: (value) => setState(() {
+                userNo = value;
+              }),
+            ),
             Center(
               child: Text(data.userId.toString()),
             ),
@@ -43,5 +53,25 @@ class HomeScreen extends ConsumerWidget {
     }, loading: () {
       return const Center(child: CircularProgressIndicator());
     });
+
+    // return Scaffold(
+    //   body: ref.watch(streamProvider).when(
+    //     data: (data) {
+    //       return Text(
+    //         data.toString(),
+    //       );
+    //     },
+    //     error: (error, st) {
+    //       return Center(
+    //         child: Text(
+    //           error.toString(),
+    //         ),
+    //       );
+    //     },
+    //     loading: () {
+    //       return const Center(child: CircularProgressIndicator());
+    //     },
+    //   ),
+    // );
   }
 }
